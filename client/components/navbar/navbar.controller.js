@@ -3,7 +3,7 @@
 angular.module('mozChecklistsApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{
-      'title': 'Home',
+      'title': 'Checks',
       'link': '/'
     }];
 
