@@ -5,6 +5,9 @@ angular.module('mozChecklistsApp')
     $scope.menu = [{
       'title': 'Checks',
       'link': '/'
+    }, {
+      'title': 'Runs',
+      'link': '/runs'
     }];
 
     $scope.isCollapsed = true;

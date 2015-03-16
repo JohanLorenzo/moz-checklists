@@ -15,6 +15,7 @@ var checkRun = new Schema({
 var RunSchema = new Schema({
   branch: String,
   buildId: String,
+  latestCommitOnBranch: String,
   startedOn: { type: Date, default: Date.now },
   endedOn: { type: Date, default: new Date(0) },
   createdBy: String,

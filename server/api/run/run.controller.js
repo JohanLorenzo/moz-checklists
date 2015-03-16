@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Run = require('./run.model');
+var repo = require('../../git/local-repo');
 
 // Get list of runs
 exports.index = function(req, res) {
@@ -25,9 +26,14 @@ exports.create = function(req, res) {
   var data = req.body;
   data.createdBy = req.user.email;
 
-  Run.create(req.body, function(err, run) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, run);
+  // Add latest commit
+  repo.getLatestCommitSha1().then(function(sha1) {
+    data.latestCommitOnBranch = sha1;
+
+    Run.create(req.body, function(err, run) {
+      if(err) { return handleError(res, err); }
+      return res.json(201, run);
+    });
   });
 };
 

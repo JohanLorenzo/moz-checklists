@@ -43,5 +43,14 @@ var self = module.exports = {
         })
       })
     })
+  },
+
+  getLatestCommitSha1: function() {
+    return new Promise(function(fulfill, reject) {
+      // latest doesn't return the latest commit
+      return git.log(function(err, log) {
+        fulfill(log.all[0].hash);
+      })
+    })
   }
 };
