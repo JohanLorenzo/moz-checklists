@@ -6,7 +6,7 @@
     <table class="table">
       <tr><th>Id</th><th>Branch</th><th>Build ID</th><th>Started</th><th>Created by</th></tr>
       <tr ng-repeat="run in runs">
-        <td>{{run._id}}</td>
+        <td><a href="runs/{{run._id}}">{{run._id}}</a></td>
         <td>{{run.branch}}</td>
         <td>{{run.buildId}}</td>
         <td>{{run.startedOn | amTimeAgo }}</td>

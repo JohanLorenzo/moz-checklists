@@ -5,7 +5,7 @@ angular.module('mozChecklistsApp')
     $stateProvider
       .state('runs', {
         url: '/runs',
-        templateUrl: 'app/runs/runs.html',
+        templateUrl: 'app/runs/list/runs.html',
         controller: 'RunsCtrl'
       });
   });
