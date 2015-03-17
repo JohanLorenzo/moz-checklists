@@ -43,7 +43,17 @@ exports.update = function(req, res) {
   Run.findById(req.params.id, function (err, run) {
     if (err) { return handleError(res, err); }
     if(!run) { return res.send(404); }
-    var updated = _.merge(run, req.body);
+
+    if (req.body.checksRun) {
+      req.body.checksRun.forEach(function(checkRun) {
+        if (checkRun.status !== 'pending' && checkRun.executedOn !== new Date(0)) {
+          checkRun.executedOn = new Date();
+          checkRun.executedBy = req.user.email;
+        }
+      });
+    }
+
+    var updated = _.extend(run, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, run);

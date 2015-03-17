@@ -1,0 +1,28 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Test run</h1>
+    <p>Branch: {{ run.branch }}</p>
+    <p>Build ID: {{ run.buildId }}</p>
+    <p>Created by: {{ run.createdBy }}</p>
+    <p>Started: {{ run.startedOn | amTimeAgo}}</p>
+    <table class="table">
+      <tr><th>Id</th><th>Instructions</th><th>Status</th><th>Checked</th><th>By</th></tr>
+      <tr ng-repeat="checkRun in run.checksRun">
+        <td>{{checkRun.checkId}}</td>
+        <td>{{checkRun.instructions}}</td>
+        <td>
+          <div class="btn-group btn-group-xs" role="group" aria-label="...">
+            <button type="button" class="btn btn-success" ng-class="{'not-selected': checkRun.status !== 'passed' && checkRun.status !== 'pending'}" ng-click="setResult(checkRun, 'passed')">Passed</button>
+            <button type="button" class="btn btn-warning" ng-class="{'not-selected': checkRun.status !== 'invalid' && checkRun.status !== 'pending'}" ng-click="setResult(checkRun, 'invalid')">Invalid</button>
+            <button type="button" class="btn btn-danger" ng-class="{'not-selected': checkRun.status !== 'failed' && checkRun.status !== 'pending'}" ng-click="setResult(checkRun, 'failed')">Failed</button>
+            <button type="button" class="btn btn-default" ng-class="{'not-selected': checkRun.status !== 'skipped' && checkRun.status !== 'pending'}" ng-click="setResult(checkRun, 'skipped')">Skipped</button>
+          </div>
+        </td>
+        <td>{{checkRun.executedOn | amTimeAgo }}</td>
+        <td>{{checkRun.executedBy}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
