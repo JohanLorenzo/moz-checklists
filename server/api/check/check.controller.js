@@ -51,7 +51,7 @@ exports.show = function(req, res) {
 
 // Get a single check
 exports.showAtGivenRevision = function(req, res) {
-  repo.getFileContentAtRevision('README.md', req.params.revision)
+  repo.getFileContent('README.md', req.params.revision)
     .then(function(text) {
       _handleSingleCheck(req.params.id, text, res);
     });

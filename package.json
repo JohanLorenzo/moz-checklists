@@ -19,11 +19,11 @@
     "method-override": "~1.0.0",
     "mongoose": "~3.8.8",
     "morgan": "~1.0.0",
+    "nodegit": "^0.3.3",
     "passport": "~0.2.0",
     "passport-local": "~0.1.6",
     "promise": "^6.1.0",
     "serve-favicon": "~2.0.1",
-    "simple-git": "^0.14.0",
     "socket.io": "^1.0.6",
     "socket.io-client": "^1.0.6",
     "socketio-jwt": "^2.0.2"
