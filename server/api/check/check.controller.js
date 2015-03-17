@@ -3,6 +3,8 @@
 var marked = require('marked');
 var repo = require('../../git/local-repo')
 
+// TODO refactor exports.index and exports.show
+
 // Get list of checksuites
 exports.index = function(req, res) {
   repo.getFileContent('README.md').then(function(text){
@@ -38,6 +40,51 @@ exports.index = function(req, res) {
     return res.json(200, checks);
   })
 };
+
+// Get a single check
+exports.show = function(req, res) {
+  repo.getFileContent('README.md')
+    .then(function(text) {
+      _handleSingleCheck(req.params.id, text, res);
+    });
+};
+
+// Get a single check
+exports.showAtGivenRevision = function(req, res) {
+  repo.getFileContentAtRevision('README.md', req.params.revision)
+    .then(function(text) {
+      _handleSingleCheck(req.params.id, text, res);
+    });
+};
+
+var _handleSingleCheck = function(id, text, res) {
+  var check = {};
+
+  var lexer = new marked.Lexer();
+  var tokens = lexer.lex(text);
+
+  for (var i = 0; i < tokens.length;) {
+    var token = _getArrayElementSafely(i, tokens);
+
+    if (token && token.type === 'heading' && token.depth === 3 && id === token.text) {
+      check.id = token.text;
+
+      token = _getArrayElementSafely(++i, tokens);
+      while (token && (token.type === 'paragraph' || token.type === 'table')) {
+        if (token.type === 'paragraph') {
+          _handleParagraph(check, token);
+        } else {
+          _handleTable(check, token);
+        }
+        token = _getArrayElementSafely(++i, tokens);
+      }
+      break;
+    } else {
+      i++;
+    }
+  };
+  return res.json(200, check);
+}
 
 var _getArrayElementSafely = function(index, array) {
   return index < array.length ? array[index] : null;

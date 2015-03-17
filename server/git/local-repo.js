@@ -27,7 +27,7 @@ var self = module.exports = {
   update: function() {
     return _initializeRepo()
     .then(function() {
-      return git.pull()
+      return git.pull();
     })
   },
 
@@ -37,11 +37,25 @@ var self = module.exports = {
 
   getFileContent: function(path) {
     return new Promise(function(fulfill, reject) {
-      return self.update().then(function() {
-        fs.readFile(localFolder + '/' + path, { encoding: 'utf8' }, function(err, data) {
-          fulfill(data);
-        })
-      })
+      return git.checkout(self.getCurrentBranch())
+              .then(self.update)
+              .then(function() {
+                fs.readFile(localFolder + '/' + path, { encoding: 'utf8' }, function(err, data) {
+                  fulfill(data);
+                })
+              })
+    })
+  },
+
+  getFileContentAtRevision: function(path, revision) {
+    return new Promise(function(fulfill, reject) {
+      return git.checkout(revision)
+              .then(self.update)
+              .then(function() {
+                fs.readFile(localFolder + '/' + path, { encoding: 'utf8' }, function(err, data) {
+                  fulfill(data);
+                })
+              })
     })
   },
 
