@@ -7,7 +7,8 @@ angular.module('mozChecklistsApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'angularMoment'
+  'angularMoment',
+  'angularChart'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

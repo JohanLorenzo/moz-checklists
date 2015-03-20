@@ -8,6 +8,9 @@ angular.module('mozChecklistsApp')
     }, {
       'title': 'Runs',
       'link': '/runs'
+    }, {
+      'title': 'Chart',
+      'link': '/charts'
     }];
 
     $scope.isCollapsed = true;
