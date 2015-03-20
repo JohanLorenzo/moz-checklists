@@ -73,6 +73,18 @@ exports.destroy = function(req, res) {
   });
 };
 
+// TODO: Remove this hack which was for demo purpose
+exports.restrainedIndex = function(req, res) {
+  Run.find({})
+  .and([{ checksRun: { $elemMatch: { checkId: 'fxos.func.sanity.launch-calendar' } } },
+  { checksRun: { $elemMatch: { checkId: 'fxos.func.sanity.launch-sms-repeated' } } },
+  { checksRun: { $elemMatch: { checkId: 'fxos.func.parameterized.test' } } }])
+  .exec(function (err, runs) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, runs);
+  });
+};
+
 function handleError(res, err) {
   return res.send(500, err);
 }
