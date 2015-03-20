@@ -4,8 +4,10 @@ var fs = require('fs');
 var Promise = require('promise');
 var NodeGit = require("nodegit");
 
+// TODO Export these values in a config file
 var localFolder = 'var/git';
-var remoteRepoUrl = 'http://localhost:10080/johan/moztrap-replacement-repo.git';
+var remoteRepoUrl = 'https://github.com/JohanLorenzo/checklists-repo-example.git';
+
 var _branch = 'master';
 var _repo = null;
 
