@@ -3,6 +3,7 @@
 var fs = require('fs');
 var Promise = require('promise');
 var NodeGit = require("nodegit");
+var mkdirp = require('mkdirp');
 
 // TODO Export these values in a config file
 var localFolder = 'var/git';
@@ -17,11 +18,17 @@ var _initializeRepo = function() {
       if (exists) {
         NodeGit.Repository.open(localFolder).then(function (repo) {
           _repo = repo;
+          fulfill();
         });
       } else {
-        NodeGit.Clone.clone(remoteRepoUrl, localFolder, null).then(function(repo) {
-          _repo = repo;
-        })
+        mkdirp(localFolder, function (err) {
+            if (err) console.error(err);
+            NodeGit.Clone.clone(remoteRepoUrl, localFolder, null).then(function(repo) {
+              _repo = repo;
+              fulfill();
+            })
+        });
+
       }
     });
   })
